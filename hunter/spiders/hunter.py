@@ -136,6 +136,9 @@ class Hunter(CrawlSpider):
                                    '>div>div>div>span>div>div>div:nth-child(2)')
 
         item = HunterItem()
+        # print('+'*20)
+        # print(response.url)
+        # print('+' * 20)
         item['main_item'] = {'title': response.meta['item']['title'],
                              'ssd': response.meta['item']['ssd'],
                              'cpu': response.meta['item']['cpu'],
@@ -167,7 +170,8 @@ class Hunter(CrawlSpider):
         if pagination is not None:
             current_page = pagination[-1]
             if int(current_page) <= 5 or current_page is '':
-                yield Request('https://www.amazon.com' + pagination, callback=self.start_amazon_search)
+                yield Request('https://www.amazon.com' + pagination, callback=self.start_amazon_search,
+                              meta={'item': response.meta['item']})
 
         # print('-'*20)
         # for i in self.final_product_list:

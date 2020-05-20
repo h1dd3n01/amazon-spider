@@ -9,5 +9,5 @@ import scrapy
 
 
 class HunterItem(scrapy.Item):
-    main_item = scrapy.Item
-    secondary_item = scrapy.Item
+    main_item = scrapy.Field()
+    secondary_item = scrapy.Field()

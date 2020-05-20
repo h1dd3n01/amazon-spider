@@ -2,6 +2,7 @@ from scrapy.spiders import CrawlSpider
 from scrapy import FormRequest, Request
 from ..items import HunterItem
 from ..meta import *
+import time
 
 
 class Hunter(CrawlSpider):
@@ -119,6 +120,7 @@ class Hunter(CrawlSpider):
             )
             print('Started request #' + str(req))
             req += 1
+            time.sleep(1)
 
     def start_amazon_search(self, response):
 
@@ -126,6 +128,8 @@ class Hunter(CrawlSpider):
                                  '>div>div>h1>span::text').extract_first()
         if not_found is not None:
             print('Product not found ' + response.meta['item']['title'])
+            return
+        if response.meta['item']['price'] < 50:
             return
 
         start_point = response.css('#search>.s-desktop-width-max>div:nth-child(2)>div>span:nth-child(5)'
@@ -135,7 +139,8 @@ class Hunter(CrawlSpider):
         item['main_item'] = {'title': response.meta['item']['title'],
                              'ssd': response.meta['item']['ssd'],
                              'cpu': response.meta['item']['cpu'],
-                             'price': response.meta['item']['price']}
+                             'price': response.meta['item']['price'],
+                             'ram': response.meta['item']['ram']}
 
         for i in start_point:
             title = i.css('div:nth-child(2)>div>div:nth-child(1)>div>div>div>h2>a>span::text').extract_first() or None
@@ -147,7 +152,7 @@ class Hunter(CrawlSpider):
             if price is not None:
                 item['secondary_item'] = {'title': title,
                                           'price': price,
-                                          'url': url}
+                                          'url': 'https://www.amazon.com/{}'.format(url)}
                 yield item
 
         pagination = response.css('.s-desktop-width-max>div:nth-child(2)>div>span:nth-child(10)'

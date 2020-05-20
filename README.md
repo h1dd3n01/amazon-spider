@@ -8,7 +8,7 @@ By default scrapes 5 amazon pagination pages.
 Results are save as json, similar products are sorted by price, lower first.
 
 
-How to user:
+How to use:
 
 `scrapy crawl hun73r -a brand='{brand_name}' -a product_type={product_type} -a screenSize={screenSize}`
 

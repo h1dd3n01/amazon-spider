@@ -96,7 +96,9 @@ class Hunter(CrawlSpider):
             if item['price'] is None:
                 item['price'] = li.css('.border-right>.price-box>p>.price::text').extract_first()
 
-            self.product_list.append(parse_meta(item, self.brand))
+            item = parse_meta(item, self.brand)
+            if int(item['price']) > 100:
+                self.product_list.append(item)
 
             pagination = response.css('.main-container>div>.col-main>'
                                       '.category-products>.toolbar-bottom'
@@ -129,8 +131,6 @@ class Hunter(CrawlSpider):
         if not_found is not None:
             print('Product not found ' + response.meta['item']['title'])
             return
-        if response.meta['item']['price'] < 50:
-            return
 
         start_point = response.css('#search>.s-desktop-width-max>div:nth-child(2)>div>span:nth-child(5)'
                                    '>div>div>div>span>div>div>div:nth-child(2)')
@@ -150,8 +150,14 @@ class Hunter(CrawlSpider):
                 'div>div>div>div>a>span>.a-offscreen::text').extract_first() or None
 
             if price is not None:
-                item['secondary_item'] = {'title': title,
-                                          'price': price,
+                sample = {'title': title,
+                          'price': price}
+                sample = parse_meta(sample, self.brand)
+                item['secondary_item'] = {'title': sample['title'],
+                                          'price': sample['price'],
+                                          'ssd': sample['ssd'],
+                                          'cpu': sample['cpu'],
+                                          'ram': sample['ram'],
                                           'url': 'https://www.amazon.com/{}'.format(url)}
                 yield item
 

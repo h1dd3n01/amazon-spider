@@ -34,7 +34,8 @@ def parse_meta(item, brand):
     ram = [i for i in check_ram if i in title]
     screen = [i for i in check_screen if i in title]
     year = [i for i in check_year if i in title.replace('(', '').replace(')', '')]
-    price = item['price'].replace('£', '').replace('\n', '').replace(',', '')
+    price = item['price'].replace('£', '').replace('\n', '').replace(',', '') \
+        .replace('$', '')
     price = str(float(price) * 1.07).partition('.')[0]
     if brand.lower() == 'apple':
         title = [i for i in check_apple_product if i in title]

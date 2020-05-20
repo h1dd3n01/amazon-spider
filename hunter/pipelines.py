@@ -1,9 +1,18 @@
 import json
 import os
+import bisect
 
 
 class HunterPipeline(object):
+    count = 0
+
     def process_item(self, item, spider):
+        self.count += 1
+        print('-' * 20)
+        print('-' * 20)
+        print(self.count)
+        print('-' * 20)
+        print('-' * 20)
         flag = False
         if os.path.isfile('scrapedData.json'):
             with open('scrapedData.json', 'r+') as f:
@@ -35,7 +44,3 @@ class HunterPipeline(object):
                 f.write(json.dumps(json_file))
                 f.close()
         return item
-
-
-
-

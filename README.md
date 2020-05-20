@@ -5,7 +5,7 @@ Scrapes product data form specified E-commerce website and looks up similar prod
 
 By default scrapes 5 amazon pagination pages.
 
-Results are save as json, similar products are sorted by price, lower first
+Results are save as json, similar products are sorted by price, lower first.
 
 
 How to user:

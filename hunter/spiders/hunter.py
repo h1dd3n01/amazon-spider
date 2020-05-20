@@ -161,7 +161,7 @@ class Hunter(CrawlSpider):
                                           'ssd': sample['ssd'],
                                           'cpu': sample['cpu'],
                                           'ram': sample['ram'],
-                                          'url': 'https://www.amazon.com/{}'.format(url)}
+                                          'url': 'https://www.amazon.com{}'.format(url)}
                 yield item
 
         pagination = response.css('.s-desktop-width-max>div:nth-child(2)>div>span:nth-child(10)'

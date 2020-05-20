@@ -16,3 +16,4 @@ All arguments aren't necessary, the brand is enough to play around with it.
 If you input some random `string` it will print out all available options.
 
 There is a sample file `scrapedData74.json` to look at. Searched for Apple brand.
+Fixed bug where lead url has double //

@@ -17,23 +17,19 @@ class HunterPipeline(object):
                 i['lead'].append(item['secondary_item'])
                 i['lead'] = sorted(i['lead'], key=itemgetter('price'))
                 flag = True
-                print('Added item')
                 break
         if not flag:
-            print('Added new item')
             item['main_item']['lead'] = []
             item['main_item']['lead'].append(item['secondary_item'])
             self.json_data['main'].append(item['main_item'])
         return item
 
     def close_spider(self, spider):
-        print('Spider in closing phase')
         val = random.randrange(0, 999)
         filename = 'scrapedData{}.json'.format(val)
         while os.path.isfile(filename):
             val = random.randrange(0, 999)
             filename = 'scrapedData{}.json'.format(val)
         with open(filename, 'a+') as f:
-            print('File was opened')
             f.write(json.dumps(self.json_data))
             f.close()

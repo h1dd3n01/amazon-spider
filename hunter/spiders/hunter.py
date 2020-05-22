@@ -95,7 +95,6 @@ class Hunter(CrawlSpider):
 
             if item['price'] is None:
                 item['price'] = li.css('.border-right>.price-box>p>.price::text').extract_first()
-
             item = parse_meta(item, self.brand)
             if int(item['price']) > 100:
                 self.product_list.append(item)

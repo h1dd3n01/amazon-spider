@@ -11,7 +11,7 @@ check_cpu = ['Core i7-8750', 'Intel Celeron 3865U', 'Intel Core i5-8250', 'Core 
              'Intel Core i9-9980HK', 'Intel Core i7-7200U', 'Intel Core i7-7500U', 'Core i7-8750H',
              'Core i7-8750', 'Intel Core i3-5005U', 'Core i7-9700K', 'Intel i5-9300H', 'Intel Core-i7-7700'
                                                                                        'Intel Core i7-8550',
-             'Intel Dual Core N4000', 'Intel Core i7-8750H', 'Intel i9-9880H'
+             'Intel Dual Core N4000', 'Intel Core i7-8750H', 'Intel i9-9880H', 'Intel Xeon E5-1660V3 Octa-Core',
                                                              'Intel Dual Core', 'Intel Celeron',
              'Intel Pentium N4200',
              'Intel Core i5',
@@ -34,9 +34,12 @@ def parse_meta(item, brand):
     ram = [i for i in check_ram if i in title]
     screen = [i for i in check_screen if i in title]
     year = [i for i in check_year if i in title.replace('(', '').replace(')', '')]
-    price = item['price'].replace('£', '').replace('\n', '').replace(',', '') \
-        .replace('$', '')
-    price = str(float(price) * 1.07).partition('.')[0]
+    if '£' in item['price']:
+        price = item['price'].replace('£', '').replace('\n', '').replace(',', '')
+        price = str(float(price) * 1.07).partition('.')[0]
+    else:
+        price = item['price'].replace('$', '').replace('\n', '').replace(',', '')
+        price = str(float(price) * 0.9).partition('.')[0]
     if brand.lower() == 'apple':
         title = [i for i in check_apple_product if i in title]
     else:

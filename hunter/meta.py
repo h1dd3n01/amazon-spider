@@ -57,5 +57,5 @@ def parse_meta(item, brand):
         'ram': ram[0] if len(ram) > 0 else '',
         'screen': screen[0] if len(screen) > 0 else '',
         'year': year[0] if len(year) > 0 else '',
-        'price': price
+        'price': int(price)
     }
